@@ -7,8 +7,8 @@ if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != '')) {
     exit;
 }
 include 'config.php';
-$username = $_SESSION['username'];
 
+$username = 'maine';
 
 ?>
 
@@ -29,24 +29,25 @@ $username = $_SESSION['username'];
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            
+            <!-- Navbar Brand
+            <a class="navbar-brand ps-3" href="index.html"> <?php echo $username?></a>
+            <!-- Sidebar Toggle-->
             <a class="navbar-brand ps-3" href="index.html"><?php echo $username?> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars" style="color:white"></i></button>
-            
+            <!-- Navbar Search
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-            
+            <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown" style="color:white">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <!--<li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>-->
+                        
                         <li><a class="dropdown-item" href="login.php">Logout</a></li>
                     </ul>
                 </li>
@@ -81,7 +82,8 @@ $username = $_SESSION['username'];
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                   
+                                    <!--<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Charts-->
                                         <a class="nav-link" href="charts.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
@@ -89,13 +91,11 @@ $username = $_SESSION['username'];
                             <a class="nav-link" href="tables.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
-                            </a>
-                                        
-                                </nav>
-                            </div>
-                            
-                        </div>
+                            </a>                                    
+                        </nav>
                     </div>
+                </div>
+             </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
                         <?php echo $username?>
@@ -111,7 +111,6 @@ $username = $_SESSION['username'];
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
-                                
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body" href="entry-form.php">Incident Report</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -148,103 +147,99 @@ $username = $_SESSION['username'];
                                 </div>
                             </div>
                         </div>
-                       
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 <?php echo $username?>
-
                             </div>
-
-            <script>
-          
-             </script>
-                                              </div>  
-                                            </div>
-                            <div class="card-body">
-                            <div class="col col-md-6 text-right">
+                            </div>  
+                        </div>
+                <div class="card-body">
+                <div class="col col-md-6 text-right">
         <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
     </div>
     <br>
 
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Incident Number</th>
-                                            <th>County</th>
-                                            <th>Department</th>
-                                            <th>MOBILE CRISIS Unit Involvement</th>
-                                            <th>Threat Assessment</th>
-                                            <th>Weapons</th>
-                                            <th>Officer Involvement</th>
-                                            <th>CIT On Scene</th>
-                                            <th>Outcome</th>
-                                            <th>Feedback</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                    <?php
+    <table id="datatablesSimple">
+        <thead>
+            <tr>
+                <th>Incident Number</th>
+                <th>County</th>
+                <th>Department</th>
+                <th>MOBILE CRISIS Unit Involvement</th>
+                <th>Threat Assessment</th>
+                <th>Weapons</th>
+                <th>Officer Involvement</th>
+                <th>CIT On Scene</th>
+                <th>Outcome</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+        <?php
 
-                                   $MyQuery = "select * from users where username = '$username'";
-                                   $locResult = mysqli_query($DBConnect, $MyQuery);
-                                   $location = mysqli_fetch_assoc($locResult);
-                                   $locationID = $location['locationID'];
-                                   $Query = "select * from Incidents where locationID ='$locationID' ";
-                                    $Result = @mysqli_query($DBConnect, $Query);
-                                    if(mysqli_num_rows($Result)>0) {
-                                        while(($Row = mysqli_fetch_assoc($Result))== true){ ?>
-                                        <tr>
-                                        <td><?php echo $Row["IncidentNum"]; ?></td>
-                                        <td><?php echo $Row["County"]; ?></td>
-                                        <td><?php echo $Row["department"]; ?></td>
-                                        <td><?php echo $Row["MCInvolvement"]; ?></td>
-                                        <td><?php echo $Row["ConsThreatAsses"]; ?></td>
-                                        <td><?php echo $Row["Weapons"]; ?></td>
-                                        <td><?php echo $Row["OfficerInvolv"]; ?></td>
-                                        <td><?php echo $Row["CITOnScene"]; ?></td>
-                                        <td><?php echo $Row["Outcome"]; ?></td>
-                                        <td><?php echo $Row["Feedback"]; ?></td>
-                                        </tr>
-                                        <?php }
-                                     }
-                                     ?>
-                                    
-                                       
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Incident Number</th>
-                                            <th>County</th>
-                                            <th>Department</th>
-                                            <th>MOBILE CRISIS Unit Involvement</th>
-                                            <th>Threat Assessment</th>
-                                            <th>Weapons</th>
-                                            <th>Officer Involvement</th>
-                                            <th>CIT On Scene</th>
-                                            <th>Outcome</th>
-                                            <th>Feedback</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                               <script>
-                                     function html_table_to_excel(type) {
-                                     var data = document.getElementById('datatablesSimple');
+        
+        $MyQuery = "select * from users where username = '$username'";
+        $locResult = mysqli_query($DBConnect, $MyQuery);
+        $location = mysqli_fetch_assoc($locResult);
+        $locationID = $location['locationID'];
+        
+        $Query = "select * from Incidents where locationID ='$locationID' ";
+        $Result = @mysqli_query($DBConnect, $Query);
+        if(mysqli_num_rows($Result)>0) {
+            while(($Row = mysqli_fetch_assoc($Result))== true){ ?>
+            <tr>
+            <td><?php echo $Row["IncidentNum"]; ?></td>
+            <td><?php echo $Row["County"]; ?></td>
+            <td><?php echo $Row["department"]; ?></td>
+            <td><?php echo $Row["MCInvolvement"]; ?></td>
+            <td><?php echo $Row["ConsThreatAsses"]; ?></td>
+            <td><?php echo $Row["Weapons"]; ?></td>
+            <td><?php echo $Row["OfficerInvolv"]; ?></td>
+            <td><?php echo $Row["CITOnScene"]; ?></td>
+            <td><?php echo $Row["Outcome"]; ?></td>
+            <td><?php echo $Row["Feedback"]; ?></td>
+            </tr>
+            <?php }
+            }
+            ?>
+        
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Incident Number</th>
+                <th>County</th>
+                <th>Department</th>
+                <th>MOBILE CRISIS Unit Involvement</th>
+                <th>Threat Assessment</th>
+                <th>Weapons</th>
+                <th>Officer Involvement</th>
+                <th>CIT On Scene</th>
+                <th>Outcome</th>
+                <th>Feedback</th>
+            </tr>
+                    </tfoot>
+                </table>
+                <script>
+                        function html_table_to_excel(type) {
+                        var data = document.getElementById('datatablesSimple');
 
-                                    var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
+                    var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
 
-                                    XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+                    XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
 
-                                    XLSX.writeFile(file, 'file.' + type);
-                                }
+                    XLSX.writeFile(file, 'file.' + type);
+                }
 
-                                const export_button = document.getElementById('export_button');
+                const export_button = document.getElementById('export_button');
 
-                                export_button.addEventListener('click', () => {
-                                    html_table_to_excel('xlsx');
-                                    });
-                            </script>
-                            </div>
+                export_button.addEventListener('click', () => {
+                    html_table_to_excel('xlsx');
+                    });
+            </script>
+            </div>
                                                       
                         </div>
                     </div>
@@ -273,6 +268,5 @@ $username = $_SESSION['username'];
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-       
     </body>
 </html>

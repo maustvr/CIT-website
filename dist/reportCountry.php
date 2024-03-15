@@ -8,6 +8,7 @@ if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != '')) {
 }
 include 'config.php';
 $username = $_SESSION['username'];
+//$username = 'maine';
 $userID = $_SESSION['userID'];
 $isActive = $_SESSION['isActive'];
  $isAdmin = $_SESSION['isAdmin'];
@@ -45,8 +46,13 @@ $isActive = $_SESSION['isActive'];
                     }
                     ?>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand
+            <a class="navbar-brand ps-3" href="index.html"> <?php echo $username?></a>
+            <!-- Sidebar Toggle-->
             <a class="navbar-brand ps-3" href="index.html"><?php echo $username?> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars" style="color:white"></i></button>
+            <!-- Navbar Search
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
@@ -58,6 +64,9 @@ $isActive = $_SESSION['isActive'];
                 <li class="nav-item dropdown" style="color:white">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <!--<li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>-->
                         <li><a class="dropdown-item" href="#!">Change Password</a></li>
                         <li><a class="dropdown-item" href="login.php">Logout</a></li>
                     </ul>
@@ -74,6 +83,7 @@ $isActive = $_SESSION['isActive'];
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
+                                <!--<div class="card bg-primary text-white mb-4">-->
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body" href="entry-form.php">Incident Report</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -136,44 +146,55 @@ $isActive = $_SESSION['isActive'];
                                 <?php echo $username?>
 
                             </div>
-            
-                        </div>  
-                    </div>
-                    <div class="card-body">
-                    <div class="col col-md-6 text-right">
-                    <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
-            </div>
-            <br>
-                <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>Incident Number</th>
-                        <th>State</th>
-                        <th>County</th>
-                        <th>Department</th>
-                        <th>MOBILE CRISIS Unit Involvement</th>
-                        <th>Threat Assessment</th>
-                        <th>Weapons</th>
-                        <th>Officer Involvement</th>
-                        <th>CIT On Scene</th>
-                        <th>Outcome</th>
-                        <th>Feedback</th>
-                    </tr>
-                </thead>
-            <tbody>
-            <?php
-                $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID JOIN location on departments.locationID = location.locationID
-                    where departments.locationID  IN
-	                    (select locationID from location where country IN 
-	                    (select country from location where locationID IN 
-		                (select locationID from users where usersID = '$userID'))) ";
-                        $Result = @mysqli_query($DBConnect, $Query);
-                            if(mysqli_num_rows($Result)>0) {
-                                while(($Row = mysqli_fetch_assoc($Result))== true){
-                                    $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
-                                    'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
-                                    'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
-                                    ?>
+
+                           
+
+            <script>
+
+           
+             </script>
+                                              </div>  
+                                            </div>
+                            <div class="card-body">
+                            <div class="col col-md-6 text-right">
+        <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
+    </div>
+    <br>
+
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Incident Number</th>
+                                            <th>State</th>
+                                            <th>County</th>
+                                            <th>Department</th>
+                                            <th>MOBILE CRISIS Unit Involvement</th>
+                                            <th>Threat Assessment</th>
+                                            <th>Weapons</th>
+                                            <th>Officer Involvement</th>
+                                            <th>CIT On Scene</th>
+                                            <th>Outcome</th>
+                                            <th>Feedback</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                    <?php
+
+                                   //$DBConnect= mysqli_connect("database-1.cpiufp9nryjo.us-east-1.rds.amazonaws.com", "admin", "Administrator!", "sys");
+                                   
+                                   $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID JOIN location on departments.locationID = location.locationID
+                                   where departments.locationID  IN
+	                                            (select locationID from location where country IN 
+	                                                (select country from location where locationID IN 
+		                                                 (select locationID from users where usersID = '$userID'))) ";
+                                    $Result = @mysqli_query($DBConnect, $Query);
+                                    if(mysqli_num_rows($Result)>0) {
+                                        while(($Row = mysqli_fetch_assoc($Result))== true){
+                                        $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
+                                        'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
+                                        'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
+                                        ?>
                                         <tr>
                                         <td><?php echo $Row["IncidentNum"]; ?></td>
                                         <td><?php echo $Row["state"]; ?></td>
@@ -189,7 +210,9 @@ $isActive = $_SESSION['isActive'];
                                         </tr>
                                         <?php }
                                      }
-                                     ?>                                      
+                                     ?>
+                                    
+                                       
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -207,6 +230,7 @@ $isActive = $_SESSION['isActive'];
                                         </tr>
                                     </tfoot>
                                 </table>
+
 
                                <table hidden id="hiddenTable" >
                                     <thead>
@@ -229,6 +253,12 @@ $isActive = $_SESSION['isActive'];
                                     
                                     <tbody>
                                     <?php
+
+                                                                    
+                                   
+                                   // $Result = @mysqli_query($DBConnect, $Query);
+                                    //if(mysqli_num_rows($Result)>0) {
+                                        //while(($Row = mysqli_fetch_assoc($Result))== true){
                                         foreach($records as $record) {?>
                                         <tr>
                                         <td><?php echo $record["incident"]; ?></td>
@@ -247,6 +277,7 @@ $isActive = $_SESSION['isActive'];
 
                                         </tr>
                                         <?php }
+                                     //}
                                      ?>
                                                                           
                                     </tbody>
@@ -295,6 +326,12 @@ $isActive = $_SESSION['isActive'];
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
                         </div>
                     </div>
                 </footer>
@@ -309,6 +346,8 @@ $isActive = $_SESSION['isActive'];
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
         
+
     </body>
 </html>

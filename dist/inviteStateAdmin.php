@@ -40,9 +40,17 @@ $userID = $_SESSION['userID'];
 
                                     <div class="row mb-3">
                                                 <div class="col-md-12">
+                                                
+                                                    <!-- <label for="exampleInputName">Username</label> -->
+                                                    <!--<label for="inputCountry" class="required-field">Select Country</label>
+                                                    <div class="form-floating mb-3">-->
                                                      <br>
                                                     <div class="form-floating mb-3">
                                                         <input type="hidden" class="form-control" id="inputCountry" type="text"   name="country"  value="United States">
+                                                        <!--<select required class="form-control" id="inputCountry" type="text"   name="country" >
+                                                        
+                                                        <select required class="form-control" id="inputCountry" type="text" placeholder="country" name="country" />
+                                                        <label for="inputCountry" class="required-field">Country</label>-->
                                                       </select>  
                                                     </div>
                                                     
@@ -111,9 +119,17 @@ $userID = $_SESSION['userID'];
                                                             <option value="Puerto Rico">Puerto Rico</option>
                                                             <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
                                                             <option value="Virgin Islands">Virgin Islands</option>
+
+                                                        <!--<select required class="form-control" id="state/Province" type="text" placeholder="state/province" name="state/province" />
+                                                        <label for="state/Province" >State/Province</label>-->
                                                       </select>  
                                                     </div>
                                                     <div>
+                                                    <!--<script language="javascript">
+                                                            populateCountries("inputCountry", "inputState"); // first parameter is id of country drop-down and second parameter is id of state drop-down
+        
+                                                    </script>-->
+
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input required class="form-control" id="inputUsername" type="text" placeholder="Username" name="username">
                                                         <label for="inputUsername" class="required-field">Username</label>
@@ -127,13 +143,29 @@ $userID = $_SESSION['userID'];
                                                 <input required class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="email"/>
                                                 <label for="inputEmail" class="required-field">Email address</label>
                                             </div>
+                                        
+                                        <!--<form>
+                                            <div class="form-floating mb-3">
+                                                <input class="form-control" id="inputEmail" type="email" name="email" placeholder="" />
+                                                <label for="inputEmail">email address</label>
+                                            </div>-->
+
+                                           <!-- <div class="form-floating mb-3">
+                                                    <br>
+                                                    <div class="admin">
+                                                    <input type="checkbox" class="checkbox" id="isAdmin" name="isAdmin" value="isAdmin"/>
+                                                    <label for="isAdmin" class="checkbox-label">Is Administrator</label>
+                                                        </div>-->
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <div class="d-grid"><input type="submit"  value ="Submit" class="btn btn-primary btn-block" name="submit"></div>
+                                                
+                                                <div class="d-grid"><input type="submit"  value ="Submit" class="btn btn-primary btn-block" name="submit"></div>
 
                                             </div>
                                         </form>
                                     </div>
-                                    
+                                    <!--<div class="card-footer text-center py-3">
+                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>

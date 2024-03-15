@@ -14,6 +14,7 @@ $userCountry = $_SESSION['userCountry'];
 $isActive = $_SESSION['isActive'];
  $isAdmin = $_SESSION['isAdmin'];
  $fedAdmin = $_SESSION['fedAdmin'];
+//$username = 'maine';
 
 ?>
 
@@ -55,7 +56,7 @@ $isActive = $_SESSION['isActive'];
             <<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 
             </form>
-           
+            <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown" style="color:white">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
@@ -80,115 +81,114 @@ $isActive = $_SESSION['isActive'];
                 <div class="input-group">
                     
                     <input class="form-control" id="deactivateUser" type="text" placeholder="Enter User ID" name="deactivateUser"/>
-                    
+                    <!--<label for="selectUser">select user ID</label>
+                    <!--<input class="form-control" type="text" placeholder="Enter user ID" aria-label="Enter user ID"  />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="submit"></button>-->
+                    <!--<a class="small" href="forgotPassword.php">Forgot Password?</a>-->
                     <input type="submit"  class="btn btn-primary" value="Deactivate" style="margin-left: 5%;">
                 </div>
 
             </form>
             <br>
                                 
-                            </div>
-                        </div>
+            </div>
+        </div>
 
-                        <br>
-                       
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                <?php echo $username?>
+        <br>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                <?php echo $username?>
 
-                            </div>
+            </div>
 
-            <script>
-
-           
-             </script>
-                                              </div>  
-                                            </div>
-                            <div class="card-body">
-                            <div class="col col-md-6 text-right">
+        </div>  
+    </div>
+    <div class="card-body">
+    <div class="col col-md-6 text-right">
         <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
     </div>
     <br>
 
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>User ID</th>
-                                            <th>User name</th>
-                                            <th>Email</th>
-                                            <th>Country</th>
-                                            <th>State</th>
-                                            <th>Is Admin</th>
-                                            <th>Is Active</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                    <?php
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User name</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>Is Admin</th>
+                        <th>Is Active</th>
+                        
+                    </tr>
+                </thead>
+                
+                <tbody>
+                <?php
 
-                                  $Query = "select * from users JOIN location on location.locationID = users.locationID and users.inviteByID = '$userID'";
-                                                                   
-                                    $Result = @mysqli_query($DBConnect, $Query);
-                                    if(mysqli_num_rows($Result)>0) {
-                                        while(($Row = mysqli_fetch_assoc($Result))== true){ ?>
-                                        <tr>
-                                        <td><?php echo $Row["usersID"]; ?></td>
-                                        <td><?php echo $Row["username"]; ?></td>
-                                        <td><?php echo $Row["email"]; ?></td>
-                                        <td><?php echo $Row["country"]; ?></td>
-                                        <td><?php echo $Row["state"]; ?></td>
-                                        <td><?php echo $Row["isAdmin"]; ?></td>
-                                        <td><?php echo $Row["isActive"]; ?></td>
-                                        
-                                        </tr>
-                                        <?php }
-                                     }
-                                     ?>
-                                                                          
-                                    </tbody>
-                                    
-                                </table>
-                               <script>
-                                     function html_table_to_excel(type) {
-                                     var data = document.getElementById('datatablesSimple');
+                
+                $Query = "select * from users JOIN location on location.locationID = users.locationID and users.inviteByID = '$userID'";
+                
+                
+                $Result = @mysqli_query($DBConnect, $Query);
+                if(mysqli_num_rows($Result)>0) {
+                    while(($Row = mysqli_fetch_assoc($Result))== true){ ?>
+                    <tr>
+                    <td><?php echo $Row["usersID"]; ?></td>
+                    <td><?php echo $Row["username"]; ?></td>
+                    <td><?php echo $Row["email"]; ?></td>
+                    <td><?php echo $Row["country"]; ?></td>
+                    <td><?php echo $Row["state"]; ?></td>
+                    <td><?php echo $Row["isAdmin"]; ?></td>
+                    <td><?php echo $Row["isActive"]; ?></td>
+                    
+                    </tr>
+                    <?php }
+                    }
+                    ?>
+                
+                    
+                </tbody>
+                
+            </table>
+            <script>
+                    function html_table_to_excel(type) {
+                    var data = document.getElementById('datatablesSimple');
 
-                                    var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
+                var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
 
-                                    XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+                XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
 
-                                    XLSX.writeFile(file, 'file.' + type);
-                                }
+                XLSX.writeFile(file, 'file.' + type);
+            }
 
-                                const export_button = document.getElementById('export_button');
+            const export_button = document.getElementById('export_button');
 
-                                export_button.addEventListener('click', () => {
-                                    html_table_to_excel('xlsx');
-                                    });
-                            </script>
-                            </div>
-                                                      
-                        </div>
-                    </div>
-                </main>
-                <br>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            
-                    </div>
-                </footer>
-
-            </div>
+            export_button.addEventListener('click', () => {
+                html_table_to_excel('xlsx');
+                });
+        </script>
         </div>
+                                    
+    </div>
+            </div>
+        </main>
+        <br>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">                    
+            </div>
+        </footer>
+
+    </div>
+</div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts2.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-        
+        <script src="js/datatables-simple-demo.js"></script>       
     </body>
 </html>

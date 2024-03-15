@@ -9,6 +9,7 @@ if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != '')) {
 }
 include 'config.php';
 $username = $_SESSION['username'];
+//$username = 'maine';
 $userID = $_SESSION['userID'];
 $isActive = $_SESSION['isActive'];
  $isAdmin = $_SESSION['isAdmin'];
@@ -68,6 +69,9 @@ $dept = stripslashes($_POST['department']);
                 <li class="nav-item dropdown" style="color:white">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <!--<li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>-->
                         <li><a class="dropdown-item" href="#!">Change Password</a></li>
                         <li><a class="dropdown-item" href="login.php">Logout</a></li>
                     </ul>
@@ -91,9 +95,11 @@ $dept = stripslashes($_POST['department']);
                         <form method="post" action="" name="incident">
                         <p>Please select Country, State and County</p>
                         <div class="input-group">
-                        <label for="selectCountry" style="margin-right: 1%;">Country</label>               
-                        <select class="nav-item dropdown" style="margin-left:2%;" id="selectCountry" type="text" placeholder="Country"  name="country" onchange="getState()">
-                        <option value="">Select</option>
+                        <label for="selectCountry" style="margin-right: 1%;">Country</label>
+                        <!--<a class="navbar-brand ps-3" id="Country" value=""> </a>-->
+                
+                    <select class="nav-item dropdown" style="margin-left:2%;" id="selectCountry" type="text" placeholder="Country"  name="country" onchange="getState()">
+                    <option value="">Select</option>
                                             <?php
                                                 
                                                 $Query = "select distinct country from location;";
@@ -112,14 +118,16 @@ $dept = stripslashes($_POST['department']);
                                              <br>
                                              <a class="navbar-brand ps-3" id="State" value=""> </a>
                                                 <label for="selectState" >State/Province</label>
-                                                               
+                        
+                                           
                                                 <select class="nav-item dropdown" style="margin-left:1%;" id="selectState" placeholder="Please select state" name="state"  onchange="getCounty()" ><span class="caret"></span>
                                                 <option value="">Select</option>
 
                                                </select>
                                                <a class="navbar-brand ps-3" id="County" value=""> </a>
                                                     <label for="selectCounty" >County</label>
-                                                                  
+                        
+                                           
                                                  <select class="nav-item dropdown" style="margin-left:1%;" id="selectCounty" placeholder="Please select county" name="county" onchange="getDept()" >
                                                 <option value="">Select</option>
 
@@ -127,7 +135,8 @@ $dept = stripslashes($_POST['department']);
 
                                                 <a class="navbar-brand ps-3" id="Department" value=""> </a>
                                                         <label for="selectDepartment" >Department</label>
-                                                                  
+                        
+                                           
                                                      <select class="nav-item dropdown" style="margin-left:1%;" id="selectDepartment" placeholder="Please select department" name="department"  >
                                                     <option value="">Select</option> 
 
@@ -138,49 +147,56 @@ $dept = stripslashes($_POST['department']);
                 <br>
                 <br>
             </form>
-            <div class="card mb-4">
-            <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            <?php echo $dept?>
-            </div>
-            </div>
-            </div>
-            <div class="card-body">
-            <div class="col col-md-6 text-right">
-                <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
-             </div>
-             <br>
+            <!--<a class="navbar-brand ps-3" id="country" value=""><?php echo $country?> </a>-->
+                        
+                        -<div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                <?php echo $dept?>
+
+                            </div>
+                       </div>
+                   </div>
+                            <div class="card-body">
+                            <div class="col col-md-6 text-right">
+        <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
+        </div>
+        <br>
                 <table id="datatablesSimple">
-                    <thead>
-                    <tr>
-                        <th>Incident Number</th>
-                        <th>Country</th>
-                        <th>State</th>
-                        <th>County</th>
-                        <th>Department</th>
-                        <th>MOBILE CRISIS Unit Involvement</th>
-                        <th>Threat Assessment</th>
-                        <th>Weapons</th>
-                        <th>Officer Involvement</th>
-                        <th>CIT On Scene</th>
-                         <th>Outcome</th>
-                         <th>Feedback</th>
-                        <th>Time</th>
-                    </tr>
-                    </thead>
-                        <tbody>
-                            <?php
-                                $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID
+                                    <thead>
+                                        <tr>
+                                            <th>Incident Number</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>County</th>
+                                            <th>Department</th>
+                                            <th>MOBILE CRISIS Unit Involvement</th>
+                                            <th>Threat Assessment</th>
+                                            <th>Weapons</th>
+                                            <th>Officer Involvement</th>
+                                            <th>CIT On Scene</th>
+                                            <th>Outcome</th>
+                                            <th>Feedback</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                    <?php
+                                  
+                                   $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID
                                         JOIN location on departments.locationID = location.locationID where departments.locationID IN
 	                                            (select locationID from location where department = '$dept')";
                                     $Result = @mysqli_query($DBConnect, $Query);
-                                    $records = array();                                    
+                                    $records = array();
+                                    
                                     if(mysqli_num_rows($Result)>0) {
                                         while(($Row = mysqli_fetch_assoc($Result))== true){
                                         $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
                                         'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
                                         'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
-                                                                               
+                                        
+                                       
                                         ?>
                                         <tr>
                                         <td><?php echo $Row["IncidentNum"]; ?></td>
@@ -223,6 +239,7 @@ $dept = stripslashes($_POST['department']);
                                     </tfoot>
                                 </table>
 
+
                                 <table hidden id="hiddenTable" >
                                     <thead>
                                         <tr>
@@ -244,6 +261,12 @@ $dept = stripslashes($_POST['department']);
                                     
                                     <tbody>
                                     <?php
+
+                                                                    
+                                   
+                                   // $Result = @mysqli_query($DBConnect, $Query);
+                                    //if(mysqli_num_rows($Result)>0) {
+                                        //while(($Row = mysqli_fetch_assoc($Result))== true){
                                         foreach($records as $record) {?>
                                         <tr>
                                         <td><?php echo $record["incident"]; ?></td>
@@ -262,6 +285,7 @@ $dept = stripslashes($_POST['department']);
 
                                         </tr>
                                         <?php }
+                                     //}
                                      ?>
                                                                           
                                     </tbody>
@@ -333,5 +357,10 @@ $dept = stripslashes($_POST['department']);
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         
+
+
+
+        
+
     </body>
 </html>

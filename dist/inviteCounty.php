@@ -44,6 +44,10 @@ $userCountry = $_SESSION['userCountry'];
                                                 <br>
                                                 <div class="form-floating mb-3">
                                                         <input type="hidden" class="form-control" id="inputCountry" type="text"   name="country"  value="<?php echo $userCountry ?>">
+                                                        <!--<select required class="form-control" id="inputCountry" type="text"   name="country" >
+                                                        
+                                                        <select required class="form-control" id="inputCountry" type="text" placeholder="country" name="country" />
+                                                        <label for="inputCountry" class="required-field">Country</label>-->
                                                       </select>  
                                                     </div>
                                                     <div class="form-floating mb-3">
@@ -64,16 +68,33 @@ $userCountry = $_SESSION['userCountry'];
                                                     </div>
                                                 </div>
                                                     <div class="small mb-3 text-muted">Enter the email address to send a registration link.</div>
-                                                        <div class="form-floating mb-3">                                   
+                                                        <div class="form-floating mb-3">
+                                                        <!--<select required class="form-control" id="inputCountry" type="text"   name="country" >
+                                                        
+                                                        <select required class="form-control" id="inputCountry" type="text" placeholder="country" name="country" />
+                                                        <label for="inputCountry" class="required-field">Country</label>-->
+                                                     
+                                                    
                                                 <input class="form-control" id="inputEmail" type="email" name="email" placeholder="" />
                                                 <label for="inputEmail">Email address</label>
                                             </div>
 
+                                            <!--<div class="form-floating mb-3">
+                                                    <br>
+                                                    <div class="admin">
+                                                    <input type="checkbox" class="checkbox" id="isAdmin" name="isAdmin" value="isAdmin"/>
+                                                    <label for="isAdmin" class="checkbox-label">Is Administrator</label>
+                                                        </div>-->
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <!--<a class="small" href="login.php">Return to login</a>-->
                                                 <div class="d-grid"><input type="submit"  value ="Submit" class="btn btn-primary btn-block" name="submit"></div>
+
                                             </div>
                                         </form>
                                     </div>
+                                    <!--<div class="card-footer text-center py-3">
+                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>

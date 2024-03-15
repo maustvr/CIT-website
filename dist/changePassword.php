@@ -15,7 +15,6 @@ $userID = $_SESSION['userID'];
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <!-- <title>Login - SB Admin</title> -->
         <title>Change Password</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -58,15 +57,6 @@ $userID = $_SESSION['userID'];
                                             </div>
                                         </form>
                                         
-                                      
-                                           } else {
-                                               echo "<p>This forget password link has been expired</p>";
-                                           }
-                                       
-                                    ?>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -78,12 +68,7 @@ $userID = $_SESSION['userID'];
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <!--<div class="text-muted">Copyright &copy; Your Website 2022</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>-->
+                            
                         </div>
                     </div>
                 </footer>

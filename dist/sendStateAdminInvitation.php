@@ -6,7 +6,7 @@ if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != '')) {
 }
 
 include 'config.php';
-
+/*require 'class.phpmailer.php';
 $mail = new PHPMailer();
 $mail->IsSMTP();
 $mail->Mailer = 'smtp';
@@ -14,6 +14,10 @@ $mail->SMTPAuth = true;
 $mail->Host = 'smtp.gmail.com'; // "ssl://smtp.gmail.com" didn't worked
 $mail->Port = 465;
 $mail->SMTPSecure = 'ssl';
+// or try these settings (worked on XAMPP and WAMP):
+// $mail->Port = 587;
+// $mail->SMTPSecure = 'tls';
+
 
 $mail->Username = "your_gmail_user_name@gmail.com";
 $mail->Password = "your_gmail_password";
@@ -29,31 +33,78 @@ $mail->addAddress("user.2@gmail.com","User 2");
 
 $mail->addCC("user.3@ymail.com","User 3");
 $mail->addBCC("user.4@in.com","User 4");*/
-
+//start the session
+//session_start();
+    //echo"<script> alert ('There was an error adding the user')</script>";
     
     if(isset($_POST['submit']) && $_POST['email']) {
      
         $email = $_POST['email'];
-       
+        //echo $email;
         if(isset($_POST['isAdmin'])){
                     $isAdmin = "yes";
                     } else {
                          $isAdmin = "no";
                 }
-            
+     
+        //$result = mysqli_query($DBConnect,"SELECT * FROM users WHERE username='$username'");
+     
+        //if(mysqli_num_rows($result) > 0) {
+         
+            //$token = md5($username);
+           
+             //echo $token;
+         
+            //$expiry_time = mktime(date("H", time()+3600), date("i"), date("s"), date("m"), date("d"), date("Y"));
+         
+            //$expiry_date = date("Y-m-d H:i:s", $expiry_time);
+
+            //echo $expiry_date;
+            ////$newToken = $token. " " .$expiry_date;
+            //echo $newToken;
+         
+            //$query = mysqli_query($DBConnect, "update users set resetToken ='$token', expiryDate = '$expiry_date' where username = '$username'");
+         
+            //$link ="<a href="resetPassword.php?username=%22.%24username.%22&token=%22.%24token.%22">Click To Reset password</a>";
+
+           //if( $isAdmin = "yes" ){
             $link = '<!DOCTYPE html
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             </head>
                 <body>
 
-            <div>            
+            <div>
+            
             <p>Please click the following link to register as a new user  "<a href ="http://localhost/CIT%20database/dist/register.php?email=' . $email . '&isAdmin=' . $isAdmin . '">Register Account</a>"</p>
 
          </div>
          </body>
         </html>';
-              
+        /*}else {
+            $link = '<!DOCTYPE html
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            </head>
+                <body>
+
+            <div>
+            <!--<p>Please the following link to register as a new user "<a href ="http://localhost/CIT%20database/dist/resetPassword.php">Reset Password</a>"</p>-->
+            <p>Please click the following link to register as a new user  "<a href ="http://localhost/CIT%20database/dist/register.php?email=$email">Register Account</a>"</p>
+            
+
+        </div>
+        </body>
+        </html>';
+        }*/
+       // "<a href="http://resetPassword.php?username=%22.%24username.%22&token=%22.%24token.%22">Click to Reset Password</a>";
+            //$link = "hello";
+            //Email send code
+            //$return = mysqli_fetch_assoc($result);
+           // $email = $return['email'];
+
+            //echo $email;
+            
             $to_email = $email;
 
             $mail_subject = "Account Registration";
@@ -85,6 +136,8 @@ $mail->addBCC("user.4@in.com","User 4");*/
             </script>";
         }
             echo"error";
+//}
+
 ?>
 
 

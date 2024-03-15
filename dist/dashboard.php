@@ -31,12 +31,12 @@ $isActive = $_SESSION['isActive'];
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-        
+        <!--<script src="js/scripts2.js"></script>-->
         <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
         
     </head>
     <body class="sb-nav-fixed">
-        
+        <!--<<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">-->
             <?php
                 if($fedAdmin == "yes") {
                     include("sidebarFed.php");
@@ -50,13 +50,11 @@ $isActive = $_SESSION['isActive'];
                     }
                     ?>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-           
+            
             <a class="navbar-brand ps-3" ><?php echo $username?> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars" style="color: white" ></i></button>
             
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">                
-            </form>
-            
+            <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown" style="color:white">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
@@ -125,181 +123,170 @@ $isActive = $_SESSION['isActive'];
                                 <?php echo $username?>
 
                             </div>
-
-            <script>
-          
-             </script>
-                                              </div>  
-                                            </div>
-                            <div class="card-body">
-                            <div class="col col-md-6 text-right">
+                            </div>  
+                        </div>
+        <div class="card-body">
+        <div class="col col-md-6 text-right">
         <button type="button" id="export_button"  class="btn btn-primary btn-sm">Export to Excel</button>
     </div>
     <br>
 
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Incident Number</th>
-                                            <th>County</th>
-                                            <th>Department</th>
-                                            <th>MOBILE CRISIS Unit Involvement</th>
-                                            <th>Threat Assessment</th>
-                                            <th>Weapons</th>
-                                            <th>Officer Involvement</th>
-                                            <th>CIT On Scene</th>
-                                            <th>Outcome</th>
-                                            <th>Feedback</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                    <?php
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>Incident Number</th>
+                    <th>County</th>
+                    <th>Department</th>
+                    <th>MOBILE CRISIS Unit Involvement</th>
+                    <th>Threat Assessment</th>
+                    <th>Weapons</th>
+                    <th>Officer Involvement</th>
+                    <th>CIT On Scene</th>
+                    <th>Outcome</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+            <?php
 
-									$records = array();
-                                   $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.deptId IN (select deptID from departments where userID = '$userID')";
-                                    $Result = @mysqli_query($DBConnect, $Query);
-                                    if(mysqli_num_rows($Result)>0) {
-                                        while(($Row = mysqli_fetch_assoc($Result))== true){
-											$records[] = array(
-												'incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
-												'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
-												'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
-                                        ?>
-                                        <tr>
-                                        <td><?php echo $Row["IncidentNum"]; ?></td>
-                                        <td><?php echo $Row["county"]; ?></td>
-                                        <td><?php echo $Row["department"]; ?></td>
-                                        <td><?php echo $Row["MCInvolvement"]; ?></td>
-                                        <td><?php echo $Row["ConsThreatAsses"]; ?></td>
-                                        <td><?php echo $Row["Weapons"]; ?></td>
-                                        <td><?php echo $Row["OfficerInvolv"]; ?></td>
-                                        <td><?php echo $Row["CITOnScene"]; ?></td>
-                                        <td><?php echo $Row["Outcome"]; ?></td>
-                                        <td><?php echo $Row["Feedback"]; ?></td>
-                                        </tr>
-                                        <?php }
-                                     }
-                                     ?>
-                                    
-                                       
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Incident Number</th>
-                                            <th>County</th>
-                                            <th>Department</th>
-                                            <th>MOBILE CRISIS Unit Involvement</th>
-                                            <th>Threat Assessment</th>
-                                            <th>Weapons</th>
-                                            <th>Officer Involvement</th>
-                                            <th>CIT On Scene</th>
-                                            <th>Outcome</th>
-                                            <th>Feedback</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                <table hidden id="hiddenTable" >
-                                    <thead>
-                                        <tr>
-                                            <th>Incident Number</th>
-                                            <th>Country</th>
-                                            <th>State</th>
-                                            <th>County</th>
-                                            <th>Department</th>
-                                            <th>MOBILE CRISIS Unit Involvement</th>
-                                            <th>Threat Assessment</th>
-                                            <th>Weapons</th>
-                                            <th>Officer Involvement</th>
-                                            <th>CIT On Scene</th>
-                                            <th>Outcome</th>
-                                            <th>Feedback</th>
-                                            <th>Time</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tbody>
-                                    <?php
+                                   
+                $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.deptId IN (select deptID from departments where userID = '$userID')";
+                $Result = @mysqli_query($DBConnect, $Query);
+                if(mysqli_num_rows($Result)>0) {
+                    while(($Row = mysqli_fetch_assoc($Result))== true){
+                    $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
+                    'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
+                    'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
+                    ?>
+                    <tr>
+                    <td><?php echo $Row["IncidentNum"]; ?></td>
+                    <td><?php echo $Row["county"]; ?></td>
+                    <td><?php echo $Row["department"]; ?></td>
+                    <td><?php echo $Row["MCInvolvement"]; ?></td>
+                    <td><?php echo $Row["ConsThreatAsses"]; ?></td>
+                    <td><?php echo $Row["Weapons"]; ?></td>
+                    <td><?php echo $Row["OfficerInvolv"]; ?></td>
+                    <td><?php echo $Row["CITOnScene"]; ?></td>
+                    <td><?php echo $Row["Outcome"]; ?></td>
+                    <td><?php echo $Row["Feedback"]; ?></td>
+                    </tr>
+                    <?php }
+                    }
+                    ?>
+                
+                    
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Incident Number</th>
+                        <th>County</th>
+                        <th>Department</th>
+                        <th>MOBILE CRISIS Unit Involvement</th>
+                        <th>Threat Assessment</th>
+                        <th>Weapons</th>
+                        <th>Officer Involvement</th>
+                        <th>CIT On Scene</th>
+                        <th>Outcome</th>
+                        <th>Feedback</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <table hidden id="hiddenTable" >
+                <thead>
+                    <tr>
+                        <th>Incident Number</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>County</th>
+                        <th>Department</th>
+                        <th>MOBILE CRISIS Unit Involvement</th>
+                        <th>Threat Assessment</th>
+                        <th>Weapons</th>
+                        <th>Officer Involvement</th>
+                        <th>CIT On Scene</th>
+                        <th>Outcome</th>
+                        <th>Feedback</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                <?php
+                                  
+                foreach($records as $record) {?>
+                <tr>
+                <td><?php echo $record["incident"]; ?></td>
+                <td><?php echo $record["country"]; ?></td>
+                <td><?php echo $record["state"]; ?></td>
+                <td><?php echo $record["county"]; ?></td>
+                <td><?php echo $record["department"]; ?></td>
+                <td><?php echo $record["mcinvolvement"]; ?></td>
+                <td><?php echo $record["threat"]; ?></td>
+                <td><?php echo $record["weapons"]; ?></td>
+                <td><?php echo $record["officerinvolv"]; ?></td>
+                <td><?php echo $record["citonscene"]; ?></td>
+                <td><?php echo $record["outcome"]; ?></td>
+                <td><?php echo $record["feedback"]; ?></td>
+                <td><?php echo $record["time"]; ?></td>
 
-                                        foreach($records as $record) {?>
-                                        <tr>
-                                        <td><?php echo $record["incident"]; ?></td>
-                                        <td><?php echo $record["country"]; ?></td>
-                                        <td><?php echo $record["state"]; ?></td>
-                                        <td><?php echo $record["county"]; ?></td>
-                                        <td><?php echo $record["department"]; ?></td>
-                                        <td><?php echo $record["mcinvolvement"]; ?></td>
-                                        <td><?php echo $record["threat"]; ?></td>
-                                        <td><?php echo $record["weapons"]; ?></td>
-                                        <td><?php echo $record["officerinvolv"]; ?></td>
-                                        <td><?php echo $record["citonscene"]; ?></td>
-                                        <td><?php echo $record["outcome"]; ?></td>
-                                        <td><?php echo $record["feedback"]; ?></td>
-                                        <td><?php echo $record["time"]; ?></td>
+                </tr>
+                <?php }
+                                     
+                ?>
+                                                    
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Incident Number</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>County</th>
+                    <th>Department</th>
+                    <th>MOBILE CRISIS Unit Involvement</th>
+                    <th>Threat Assessment</th>
+                    <th>Weapons</th>
+                    <th>Officer Involvement</th>
+                    <th>CIT On Scene</th>
+                    <th>Outcome</th>
+                    <th>Feedback</th>
+                    <th>Time</th>
+                </tr>
+            </tfoot>
+        </table>
+                    
+        <script>
+                function html_table_to_excel(type) {
+                var data = document.getElementById('hiddenTable');
 
-                                        </tr>
-                                        <?php }
-                                     //}
-                                     ?>
-                                                                          
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Incident Number</th>
-                                            <th>Country</th>
-                                            <th>State</th>
-                                            <th>County</th>
-                                            <th>Department</th>
-                                            <th>MOBILE CRISIS Unit Involvement</th>
-                                            <th>Threat Assessment</th>
-                                            <th>Weapons</th>
-                                            <th>Officer Involvement</th>
-                                            <th>CIT On Scene</th>
-                                            <th>Outcome</th>
-                                            <th>Feedback</th>
-                                            <th>Time</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                
-                               <script>
-                                     function html_table_to_excel(type) {
-                                     var data = document.getElementById('hiddenTable');
+            var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
 
-                                    var file = XLSX.utils.table_to_book(data, { sheet: "sheet1" });
+            XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
 
-                                    XLSX.write(file, { bookType: type, bookSST: true, type: 'base64' });
+            XLSX.writeFile(file, 'file.' + type);
+        }
 
-                                    XLSX.writeFile(file, 'file.' + type);
-                                }
+        const export_button = document.getElementById('export_button');
 
-                                const export_button = document.getElementById('export_button');
-
-                                export_button.addEventListener('click', () => {
-                                    html_table_to_excel('xlsx');
-                                    });
-                            </script>
-                            </div>
-                                                      
-                        </div>
-                    </div>
-                </main>
-                <br>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <!--<div class="text-muted">Copyright &copy; Your Website 2022</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>-->
-                    </div>
-                </footer>
-
-            </div>
+        export_button.addEventListener('click', () => {
+            html_table_to_excel('xlsx');
+            });
+    </script>
         </div>
+                                                
+        </div>
+    </div>
+    </main>
+    <br>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    
+            </div>
+        </footer>
+
+    </div>
+</div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts2.js"></script>

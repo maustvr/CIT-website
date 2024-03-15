@@ -1,3 +1,4 @@
+<!--<?php include ('formHandler.php')?>-->
 
 <?php error_reporting (E_ALL ^ (E_NOTICE | E_DEPRECATED));
 
@@ -10,8 +11,12 @@ if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != '')) {
 include 'config.php';
 
 $username = $_SESSION['username'];
+//$username = "maine";
+//$locationID = 14;
+//$userID = 18;
 $locationID = $_SESSION['locationID'];
 $userID = $_SESSION['userID'];
+
 
 ?>
 
@@ -24,6 +29,7 @@ $userID = $_SESSION['userID'];
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Incident Report</title>
+        <!-- <title>SB Admin - Start Bootstrap Template</title> -->
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -38,15 +44,17 @@ $userID = $_SESSION['userID'];
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Incident Report</h3></div>
                                     <div class="card-body">
                                         <form method="post" action="formHandler.php" name="incident">
+                                            <!--<?php include('errors.php'); ?>-->
                                         <form>
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
                                                 <label for="inputIncidentNumber" class="required-field">Incident Number</label>
-                                                                                                
+                                                   
+                                                 
                                                     <div class="form-floating mb-3 mb-md-0">
                                                     <br>
                                                         <input required class="form-control" id="inputIncidentNumber" type="text"  placeholder="Incident Number"  name="Incident" >
-                                                       
+                                                        
                                                     </div>
                                                 </div>
                         
@@ -58,7 +66,14 @@ $userID = $_SESSION['userID'];
                                             <option value="">Please Select</option>
                                             <?php
                                                 echo $username;
+                                                //$DBConnect= mysqli_connect("database-1.cpiufp9nryjo.us-east-1.rds.amazonaws.com", "admin", "Administrator!", "sys");
+                                               /* $sqlquery = "select * from users where username = '$username'";
+                                                $connect = mysqli_query($DBConnect, $sqlquery);
+                                                $result = mysqli_fetch_assoc($connect);
+                                                $userLocation = $result['locationID'];*/
+                                                //echo $userLocation;
                                                 $Query = "select distinct county from departments where userID = '$userID'";
+                                                //$Query = "select * from Counties where locationID = $userLocation";
                                                  $Result = @mysqli_query($DBConnect, $Query);
                                                 if(mysqli_num_rows($Result) > 0) {
                                                 
@@ -72,7 +87,21 @@ $userID = $_SESSION['userID'];
                                              </select>
 
                                              <script>
-                                                
+                                                /*function get() {                         
+                                                    var val = document.getElementById("inputCounty").value;
+                                                    
+	                                                $.ajax({          
+        	                                            type:"POST",
+        	                                            url:"getDept.php",                                                        
+        	                                           data:'county='+val,
+                                                       //alert(data);
+        	                                            success: function(response){
+                                                        //alert(response);
+        		                                        $("#inputDepartment").html(response);
+        	                                            }
+	                                                });
+                                                        }*/
+                                       
                                              </script>
                                             </div>
                                             <label for="inputDepartment" class="required-field">Department</label>
@@ -81,7 +110,26 @@ $userID = $_SESSION['userID'];
                                                 <select  required class="form-control" id="inputDepartment" name="department"  value="">
 
                                                 <option value ="">Please Select</option>
-                                                
+                                               <!--<?php
+                                                /*$county = $_SESSION['county'];
+                                                $DBConnect= mysqli_connect("database-1.cpiufp9nryjo.us-east-1.rds.amazonaws.com", "admin", "Administrator!", "sys");
+                                                $sqlquery = "select * from Counties where county = '$county'";
+                                               $connect = mysqli_query($DBConnect, $sqlquery);
+                                               $result = mysqli_fetch_assoc($connect);
+                                                $countyId = $result['CountyID'];
+                                                $_SESSION ['countyID'] = $countyId;
+
+                                                $Query = "select * from departments where countyID = $countyId";
+                                                 $Result = @mysqli_query($DBConnect, $Query);
+                                                if(mysqli_num_rows($Result) > 0) {
+                                           
+                                                    while($Row = mysqli_fetch_assoc($Result)){?>
+                                               <option value="<?php echo $Row["department"]; ?>" ><?php echo $Row["department"]; ?></option>
+                                              <?php 
+                                              }
+                                                 }*/
+                                             ?>-->
+  
                                                 </select>
                                             </div>
                                             <label for="inputMobileCrisisInvolvement" class="required-field">MOBILE CRISIS Involvement</label>
@@ -119,8 +167,12 @@ $userID = $_SESSION['userID'];
                                                         <option value ="None">None</option>
                                                         <option value ="Blade/edged weapon">Blade/edged weapon</option>
                                                         <option value ="Firearm">Firearm</option>
-                                                        <option value ="Other">Other Please specify:</option>                                                
-                                                         </select>                                                        
+                                                        <option value ="Other">Other Please specify:</option>
+                                                
+                                                         </select>
+                                                        
+
+                                                        
                                                 <input class="form-control" style="display: none;" id="inputOtherWeapon" name="otherWeapon" type="text" placeholder="OtherWeapon" /> 
                                                     </div>
                                                 </div>
@@ -183,6 +235,7 @@ $userID = $_SESSION['userID'];
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
+                                        <!-- <div class="small"><a href="login.html">Have an account? Go to login</a></div> -->
                                     </div>
                                 </div>
                             </div>

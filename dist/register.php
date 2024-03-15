@@ -1,4 +1,4 @@
-
+<!--<?php include ('server.php') ?>-->
 
 <?php
 session_start();
@@ -8,6 +8,7 @@ if(isset($_GET['email'], $_GET['isAdmin'])) {
     $confirmEmail = $_GET['email'];
     $_SESSION['confirmEmail'] = $_GET['email'];
     echo $_SESSION['isAdmin'];
+    //echo $confirmEmail;
     }
 
 if (!empty($_REQUEST['submitButton'])) {
@@ -22,7 +23,10 @@ if (!empty($_REQUEST['submitButton'])) {
         echo "<script> alert(' Success ')</script>"; }
 }
 
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,6 +36,7 @@ if (!empty($_REQUEST['submitButton'])) {
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Register - SB Admin</title>
+        <!-- <title>SB Admin - Start Bootstrap Template</title> -->
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <script type="text/javascript" src="js/countries.js"></script>
@@ -47,14 +52,20 @@ if (!empty($_REQUEST['submitButton'])) {
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
                                         <form method="post" action="registerHandler.php">
+                                            <!--<?php include('errors.php'); ?>-->
                                         <form>
                                             <div class="row mb-3">
                                                 <div class="col-md-12">
+                                                
+                                                    <!-- <label for="exampleInputName">Username</label> -->
                                                     <label for="inputCountry" class="required-field">Select Country</label>
                                                     <div class="form-floating mb-3">
                                                      <br>
                                                     <div class="form-floating mb-3">
                                                         <select required class="form-control" id="inputCountry" type="text"   name="country" >
+                                                        
+                                                        <!--<select required class="form-control" id="inputCountry" type="text" placeholder="country" name="country" />
+                                                        <label for="inputCountry" class="required-field">Country</label>-->
                                                       </select>  
                                                     </div>
                                                     
@@ -65,6 +76,9 @@ if (!empty($_REQUEST['submitButton'])) {
 
                                                     <div class="form-floating mb-3">
                                                         <select required class="form-control" id="inputState" type="text"   name="state/province" >
+                                                            
+                                                        <!--<select required class="form-control" id="state/Province" type="text" placeholder="state/province" name="state/province" />
+                                                        <label for="state/Province" >State/Province</label>-->
                                                       </select>  
                                                     </div>
                                                     <div>
@@ -101,12 +115,17 @@ if (!empty($_REQUEST['submitButton'])) {
                                                 
                                                 <div class="form-floating mb-3">
                                                     <br>
+                                                    <!--<div class="admin">
+                                                    <input type="checkbox" class="checkbox" id="isAdmin" name="isAdmin" value="isAdmin"/>
+                                                    <label for="isAdmin" class="checkbox-label">Is Administrator</label>
+                                                        </div>-->
                                                 </div>
 
                                             </div>
                                             <div class="mt-4 mb-0">
                                             
                                             <label for="submit">Create Account</label>
+                                                <!--<div class="d-grid"><input type="submit" id="submit" value ="submit" class="btn btn-primary btn-block" ></div>-->
                                                 <div class="d-grid"><input type="submit"  value ="Create Account" class="btn btn-primary btn-block" name="submitButton"></div>
                                                 
                                                 </div>
@@ -116,6 +135,7 @@ if (!empty($_REQUEST['submitButton'])) {
                                     </div>
                                     
                                     <div class="card-footer text-center py-3">
+                                        <!-- <div class="small"><a href="login.html">Have an account? Go to login</a></div> -->
                                     </div>
                                 </div>
                             </div>
@@ -127,6 +147,13 @@ if (!empty($_REQUEST['submitButton'])) {
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
+                            <!--<div class="text-muted">Copyright &copy; Your Website 2022</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>-->
                     </div>
                 </footer>
             </div>

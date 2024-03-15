@@ -29,17 +29,20 @@ $userID = $_SESSION['userID'];
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        
+        <!-- Navbar Brand
+        <a class="navbar-brand ps-3" href="index.html"> <?php echo $username?></a>
+        <!-- Sidebar Toggle-->
         <a class="navbar-brand ps-3" href="index.html"><?php echo $username?> </a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars" style="color:white"></i></button>
-        
+        <!-- Navbar Search
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
             </div>
         </form>
-        
+        <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown" style="color:white">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
@@ -61,6 +64,7 @@ $userID = $_SESSION['userID'];
                         <div class="sb-sidenav-menu-heading">Reports</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             
+                        
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Reports
@@ -80,7 +84,15 @@ $userID = $_SESSION['userID'];
                                 
                             </nav>
                         </div>
-                        
+                        <!--<div class="sb-sidenav-menu-heading">Addons</div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Charts
+                        </a>
+                        <a class="nav-link" href="tables.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Tables
+                        </a>-->
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -143,7 +155,6 @@ $userID = $_SESSION['userID'];
                             <?php echo $username?>
 
                         </div>
-
                         <script>
                         </script>
                     </div>
@@ -174,20 +185,6 @@ $userID = $_SESSION['userID'];
                             <?php
 
                             
-                            $userResult = mysqli_query($DBConnect, $MyQuery);
-                            $user = mysqli_fetch_assoc($userResult);
-                           
-                            function resultToArray($result) {
-                            $rows = array();
-                            while($row = $result->fetch_assoc()) {
-                            $rows[] = $row;
-                            }
-                            return $rows;
-                            }
-                            $SqlQuery = "select * from departments where userID = '$userID' ";
-                            $return = mysqli_query($DBConnect, $SqlQuery);
-                            $depts = mysqli_fetch_all($return);
-                            $dept = $depts['department'];*/
 
                             $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.deptId IN (select deptID from departments where userID = '$userID')";
                             $Result = @mysqli_query($DBConnect, $Query);
@@ -273,6 +270,6 @@ $userID = $_SESSION['userID'];
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 
-
+    
 </body>
 </html>

@@ -47,18 +47,11 @@ $isActive = $_SESSION['isActive'];
 
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <!---<a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>-->
+           
             <!-- Sidebar Toggle-->
             <a class="navbar-brand ps-3" ><?php echo $username?> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars" style="color:white"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <!--<div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>-->
-            </form>
-            <!-- Navbar-->
+            
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -131,11 +124,10 @@ $isActive = $_SESSION['isActive'];
                                                 $MCInvolvement[] = $Row["MCInvolvement"];
                                                 $Count[] = $Row["count(*)"];
                                             }
-                                            //print json_encode($MCInvolvement);
-                                            //print Json_encode($Count);
+                                            
                                         }
                                      ?>                                                                                   
-                                    <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+                                    
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -155,12 +147,11 @@ $isActive = $_SESSION['isActive'];
                                                 $OfficerInvolv[] = $Row["OfficerInvolv"];
                                                 $CountOffInvolv[] = $Row["count(*)"];
                                             }
-                                            //print json_encode($Weapons);
-                                            //print Json_encode($CountWeapons);
+                                            
                                         }
                                      ?>                                                       
 
-                                    <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+                                    
                                 </div>
                             </div>
 
@@ -185,8 +176,6 @@ $isActive = $_SESSION['isActive'];
                                             //print Json_encode($CountWeapons);
                                         }
                                      ?>                                                       
-
-                                    <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
                                 </div>
                             </div>
 
@@ -207,12 +196,9 @@ $isActive = $_SESSION['isActive'];
                                                 $CITOnScene[] = $Row["CITOnScene"];
                                                 $CountCIT[] = $Row["count(*)"];
                                             }
-                                            //print json_encode($Weapons);
-                                            //print Json_encode($CountWeapons);
+                                           
                                         }
-                                     ?>                                                       
-
-                                    <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
+                                     ?>                                                      
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -232,12 +218,9 @@ $isActive = $_SESSION['isActive'];
                                                 $Outcome[] = $Row["Outcome"];
                                                 $CountOutcome[] = $Row["count(*)"];
                                             }
-                                            //print json_encode($Weapons);
-                                            //print Json_encode($CountWeapons);
+                                           
                                         }
                                      ?>                                                       
-
-                                    <!--<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>-->
                                 </div>
                             </div>
                         
@@ -246,14 +229,7 @@ $isActive = $_SESSION['isActive'];
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <!--<div class="text-muted">Copyright &copy; Your Website 2022</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-
-                        </div>-->
+                            
                     </div>
                 
                 </footer>
@@ -263,8 +239,7 @@ $isActive = $_SESSION['isActive'];
         <script src="js/scripts2.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>
-        <!--<script src="assets/demo/chart-bar.js"></script>-->
-        <!--<script src="assets/demo/chartPie.js"></script>-->
+        
     </body>
         <script type="text/javascript">
              Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -429,12 +404,5 @@ $isActive = $_SESSION['isActive'];
                                   }],
                        },
               });
-
-               
-
-
-        </script>
-
-
-                                    
+        </script>                                   
 </html>

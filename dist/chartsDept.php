@@ -24,7 +24,6 @@ echo $country;
 echo $state;
 echo $county;
 
-
 ?>
 
 
@@ -59,10 +58,8 @@ echo $county;
                     }
                     ?>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-           
             <a class="navbar-brand ps-3" ><?php echo $username?> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 
             </form>
@@ -94,37 +91,33 @@ echo $county;
                         </ol>
                         
                         <form method="post" action="" name="incident">
-                        
                         <p>Please select Country, State and County</p>
                         <div class="input-group">
                         <label for="selectCountry" style="margin-right: 1%;">Country</label>
-                                                                    
+                        
+                                            
                         <select   class="nav-item dropdown" style="margin-left:2%;" id="selectCountry" type="text" placeholder="Country"  name="country" onchange="getState()">
-                                            <option value="">Please Select</option>
-                    
-                                            <?php
-                                                
-                                                $Query = "select distinct country from location;";
-                                                
-                                                 $Result = @mysqli_query($DBConnect, $Query);
-                                                if(mysqli_num_rows($Result) > 0) {
-                                                
-                                                while($Row = mysqli_fetch_assoc($Result)){?>
-                                                                                                
-                                                <option value="<?php echo $Row["country"]; ?>" ><?php echo $Row["country"]; ?></option>
-                                                                                               
-                                                <?php }
-                                                 }
-                                             ?>
-                                             </select>
-                                             
-                                             <br>
-                                             
-                       
+                          <option value="">Please Select</option>
+  
+                          <?php
+                              
+                              $Query = "select distinct country from location;";
+                              
+                                $Result = @mysqli_query($DBConnect, $Query);
+                              if(mysqli_num_rows($Result) > 0) {
+                              
+                              while($Row = mysqli_fetch_assoc($Result)){?>
+                                                                              
+                              <option value="<?php echo $Row["country"]; ?>" ><?php echo $Row["country"]; ?></option>
+                                                                              
+                              <?php }
+                                }
+                            ?>
+                            </select>                            
+                            <br>                      
                         <a class="navbar-brand ps-3" id="State" value=""> </a>
                         <label for="selectState" >State/Province</label>
-                        
-                                           
+                                                                   
                      <select class="nav-item dropdown" style="margin-left:1%;" id="selectState" placeholder="Please select state" name="state"  onchange="getCounty()" >
                     <option value="">Select</option>
 
@@ -152,85 +145,82 @@ echo $county;
                 
                 
             </form>
-                        <a class="navbar-brand ps-3" id="county" value=""><?php echo $dept?> </a>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Weapons
-                                    </div>
-                                    <div class="card-body"><canvas id="Weapons" width="100%" height="50"></canvas></div>
-                                    <?php
-                                        $Query = "select Weapons, count(*) from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.locationID IN
-	                                            (select locationID from location where department = '$dept')
-                                                group by Weapons;";
-                                        $Result = @mysqli_query($DBConnect, $Query);
-                                        $Weapons = array();
-                                        $CountWeapons = array();
-                                        if (mysqli_num_rows($Result) > 0) {
-                                            foreach ($Result as $Row){
-                                                $Weapons[] = $Row["Weapons"];
-                                                $CountWeapons[] = $Row["count(*)"];
-                                            }
-                                            
-                                        }
-                                     ?>                                                       
+            <a class="navbar-brand ps-3" id="county" value=""><?php echo $dept?> </a>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Weapons
+                        </div>
+                        <div class="card-body"><canvas id="Weapons" width="100%" height="50"></canvas></div>
+                        <?php
+                            $Query = "select Weapons, count(*) from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.locationID IN
+                                  (select locationID from location where department = '$dept')
+                                    group by Weapons;";
+                            $Result = @mysqli_query($DBConnect, $Query);
+                            $Weapons = array();
+                            $CountWeapons = array();
+                            if (mysqli_num_rows($Result) > 0) {
+                                foreach ($Result as $Row){
+                                    $Weapons[] = $Row["Weapons"];
+                                    $CountWeapons[] = $Row["count(*)"];
+                                }
+                                
+                            }
+                          ?>                                                       
+                    </div>
+                </div>
+                
 
-                                </div>
-                            </div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-pie me-1"></i>
+                            Mobile Crisis Involvement
+                        </div>
+                        <div class="card-body"><canvas id="MCInvolv" width="100%" height="50"></canvas></div>
+                        <?php
                             
-
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-pie me-1"></i>
-                                        Mobile Crisis Involvement
-                                    </div>
-                                    <div class="card-body"><canvas id="MCInvolv" width="100%" height="50"></canvas></div>
-                                    <?php
-                                        
-                                        $Query = "select MCInvolvement, count(*) from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.locationID IN
-	                                            (select locationID from location where department = '$dept')
-                                                group by MCInvolvement;";
-                                        $Result = @mysqli_query($DBConnect, $Query);
-                                        $MCInvolvement = array();
-                                        $Count = array();
-                                        if (mysqli_num_rows($Result) > 0) {
-                                            foreach ($Result as $Row){
-                                                $MCInvolvement[] = $Row["MCInvolvement"];
-                                                $Count[] = $Row["count(*)"];
-                                            }
-                                            
-                                        }
-                                     ?>                                                                                
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Officer Involvement
-                                    </div>
-                                    <div class="card-body"><canvas id="OfficerInvolv" width="100%" height="50"></canvas></div>
-                                    <?php
-                                        $Query = "select OfficerInvolv, count(*) from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.locationID IN
-	                                            (select locationID from location where department = '$dept')
-                                                group by OfficerInvolv;";
-                                        $Result = @mysqli_query($DBConnect, $Query);
-                                        $OfficerInvolv = array();
-                                        $CountOffInvolv = array();
-                                        if (mysqli_num_rows($Result) > 0) {
-                                            foreach ($Result as $Row){
-                                                $OfficerInvolv[] = $Row["OfficerInvolv"];
-                                                $CountOffInvolv[] = $Row["count(*)"];
-                                            }
-                                            
-                                        }
-                                     ?>                                                       
+                            $Query = "select MCInvolvement, count(*) from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.locationID IN
+                                  (select locationID from location where department = '$dept')
+                                    group by MCInvolvement;";
+                            $Result = @mysqli_query($DBConnect, $Query);
+                            $MCInvolvement = array();
+                            $Count = array();
+                            if (mysqli_num_rows($Result) > 0) {
+                                foreach ($Result as $Row){
+                                    $MCInvolvement[] = $Row["MCInvolvement"];
+                                    $Count[] = $Row["count(*)"];
+                                }
+                            }
+                          ?>                                                                                
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Officer Involvement
+                        </div>
+                        <div class="card-body"><canvas id="OfficerInvolv" width="100%" height="50"></canvas></div>
+                        <?php
+                            $Query = "select OfficerInvolv, count(*) from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.locationID IN
+                                  (select locationID from location where department = '$dept')
+                                    group by OfficerInvolv;";
+                            $Result = @mysqli_query($DBConnect, $Query);
+                            $OfficerInvolv = array();
+                            $CountOffInvolv = array();
+                            if (mysqli_num_rows($Result) > 0) {
+                                foreach ($Result as $Row){
+                                    $OfficerInvolv[] = $Row["OfficerInvolv"];
+                                    $CountOffInvolv[] = $Row["count(*)"];
+                                }
+                               
+                            }
+                          ?>                                                       
                                 </div>
                             </div>
 
@@ -253,7 +243,7 @@ echo $county;
                                                 $ThreatAssess[] = $Row["ConsThreatAsses"];
                                                 $CountThreat[] = $Row["count(*)"];
                                             }
-                                            
+                                           
                                         }
                                      ?>                                                       
                                 </div>
@@ -281,7 +271,6 @@ echo $county;
                                            
                                         }
                                      ?>                                                       
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -303,27 +292,24 @@ echo $county;
                                                 $Outcome[] = $Row["Outcome"];
                                                 $CountOutcome[] = $Row["count(*)"];
                                             }
-                                           
                                         }
                                      ?>                                                       
                                 </div>
                             </div>
-                                            
+                        
+                    
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            
                     </div>
                 
                 </footer>
             </div>
         </div>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>
-        
     </body>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
@@ -493,7 +479,5 @@ echo $county;
                                   }],
                        },
               });
-
-        </script>        
-                                    
+        </script>                                   
 </html>

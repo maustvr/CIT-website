@@ -15,10 +15,10 @@ $isActive = $_SESSION['isActive'];
  $isAdmin = $_SESSION['isAdmin'];
  $fedAdmin = $_SESSION['fedAdmin'];
 $country = stripslashes($_POST['country']);
+//$state = "Pennsylvania";
 
 $state = stripslashes($_POST['state']);
 $county = stripslashes($_POST['county']);
-
 ?>
 
 
@@ -56,11 +56,7 @@ $county = stripslashes($_POST['county']);
             
             <a class="navbar-brand ps-3" ><?php echo $username?> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                
-            </form>
-            <!-- Navbar-->
+            
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -86,35 +82,33 @@ $county = stripslashes($_POST['county']);
                             <li class="breadcrumb-item active">Counties</li>
                             <li class="breadcrumb-item"><a href="chartsDept.php">Departments</a></li>
                         </ol>
-                        
                        
                         <form method="post" action="" name="incident">
-                        <!--<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">-->
                         <p>Please select Country, State and County</p>
                         <div class="input-group">
                         <label for="selectCountry" style="margin-right: 1%;">Country</label>
                         
                                             
                         <select   class="nav-item dropdown" style="margin-left:2%;" id="selectCountry" type="text" placeholder="Country"  name="country" onchange="getState()">
-                                            <option value="">Please Select</option>
-                   
-                                            <?php
-                                                
-                                                $Query = "select distinct country from location;";
-                                                
-                                                 $Result = @mysqli_query($DBConnect, $Query);
-                                                if(mysqli_num_rows($Result) > 0) {
-                                                
-                                                while($Row = mysqli_fetch_assoc($Result)){?>
-                                                                                                
-                                                <option value="<?php echo $Row["country"]; ?>" ><?php echo $Row["country"]; ?></option>
-                                                                                               
-                                                <?php }
-                                                 }
-                                             ?>
-                                             </select>
-                                             
-                                             <br>
+                          <option value="">Please Select</option>
+  
+                          <?php
+                              
+                              $Query = "select distinct country from location;";
+                              
+                                $Result = @mysqli_query($DBConnect, $Query);
+                              if(mysqli_num_rows($Result) > 0) {
+                              
+                              while($Row = mysqli_fetch_assoc($Result)){?>
+                                                                              
+                              <option value="<?php echo $Row["country"]; ?>" ><?php echo $Row["country"]; ?></option>
+                                                                              
+                              <?php }
+                                }
+                            ?>
+                            </select>
+                            
+                            <br>
                                              
                        
                         <a class="navbar-brand ps-3" id="State" value=""> </a>
@@ -166,8 +160,6 @@ $county = stripslashes($_POST['county']);
                                             
                                         }
                                      ?>                                                       
-
-                                  
                                 </div>
                             </div>
                             
@@ -192,10 +184,9 @@ $county = stripslashes($_POST['county']);
                                                 $MCInvolvement[] = $Row["MCInvolvement"];
                                                 $Count[] = $Row["count(*)"];
                                             }
-                                            
+                                           
                                         }
                                      ?>                                                                                
-                                    
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -217,11 +208,9 @@ $county = stripslashes($_POST['county']);
                                                 $OfficerInvolv[] = $Row["OfficerInvolv"];
                                                 $CountOffInvolv[] = $Row["count(*)"];
                                             }
-                                            
+                                           
                                         }
                                      ?>                                                       
-
-                                    
                                 </div>
                             </div>
 
@@ -244,10 +233,8 @@ $county = stripslashes($_POST['county']);
                                                 $ThreatAssess[] = $Row["ConsThreatAsses"];
                                                 $CountThreat[] = $Row["count(*)"];
                                             }
-                                            
                                         }
                                      ?>                                                       
-
                                 </div>
                             </div>
 
@@ -273,7 +260,6 @@ $county = stripslashes($_POST['county']);
                                             
                                         }
                                      ?>                                                       
-
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -298,7 +284,6 @@ $county = stripslashes($_POST['county']);
                                             
                                         }
                                      ?>                                                       
-
                                 </div>
                             </div>
                         
@@ -307,17 +292,14 @@ $county = stripslashes($_POST['county']);
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            
                     </div>
                 
                 </footer>
             </div>
         </div>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>
-        
     </body>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
@@ -487,7 +469,5 @@ $county = stripslashes($_POST['county']);
                                   }],
                        },
               });
-
-        </script>
-                                   
+        </script>                                    
 </html>

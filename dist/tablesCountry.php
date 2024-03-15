@@ -9,6 +9,7 @@ if (!(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] != '')) {
 }
 include 'config.php';
 $username = $_SESSION['username'];
+//$username = 'maine';
 $userID = $_SESSION['userID'];
 $isActive = $_SESSION['isActive'];
  $isAdmin = $_SESSION['isAdmin'];
@@ -53,12 +54,19 @@ $country = stripslashes($_POST['selectCountry']);
             <!-- Navbar Search
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <!--<div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>-->
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown" style="color:white">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw" style="color:white"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <!--<li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>-->
                         <li><a class="dropdown-item" href="#!">Change Password</a></li>
                         <li><a class="dropdown-item" href="login.php">Logout</a></li>
                     </ul>
@@ -84,22 +92,25 @@ $country = stripslashes($_POST['selectCountry']);
                         <div class="input-group">
                         <a class="navbar-brand ps-3" id="Country" value=""> </a>
                 
-                        <select class="nav-item dropdown" type="text" id="selectCountry" placeholder="Please select country" name="selectCountry"  ><span class="caret"></span>
-                        <option value="">Select</option>
-                        <?php
+                    <select class="nav-item dropdown" type="text" id="selectCountry" placeholder="Please select country" name="selectCountry"  ><span class="caret"></span>
+                    <option value="">Select</option>
+                                            <?php
                                                 
-                            $Query = "select distinct country from location;";
-                             $Result = @mysqli_query($DBConnect, $Query);
-                            if(mysqli_num_rows($Result) > 0) {
-                                while($Row = mysqli_fetch_assoc($Result)){?>
-                                 <option value="<?php echo $Row["country"]; ?>" ><?php echo $Row["country"]; ?></option>
+                                                $Query = "select distinct country from location;";
+                                                
+                                                 $Result = @mysqli_query($DBConnect, $Query);
+                                                if(mysqli_num_rows($Result) > 0) {
+                                                
+                                                while($Row = mysqli_fetch_assoc($Result)){?>
+                                                                                                
+                                                <option value="<?php echo $Row["country"]; ?>" ><?php echo $Row["country"]; ?></option>
                                                                                                
-                         <?php }
-                     }
-                        ?>
-                        </select>
-                        <br>
-                     <div class="d-grid"><input style="margin-left: 5%;" type="submit" id="submit" value ="submit" class="btn btn-primary btn-block" ></div>
+                                                <?php }
+                                                 }
+                                             ?>
+                                             </select>
+                                             <br>
+                                             <div class="d-grid"><input style="margin-left: 5%;" type="submit" id="submit" value ="submit" class="btn btn-primary btn-block" ></div>
                 </div>
                 
                 <br>
@@ -121,94 +132,111 @@ $country = stripslashes($_POST['selectCountry']);
         </div>
         <br>
                 <table id="datatablesSimple">
-                    <thead>
-                        <tr>
-                        <th>Incident Number</th>
-                        <th>Country</th>
-                        <th>State</th>
-                        <th>County</th>
-                        <th>Department</th>
-                        <th>MOBILE CRISIS Unit Involvement</th>
-                        <th>Threat Assessment</th>
-                        <th>Weapons</th>
-                        <th>Officer Involvement</th>
-                        <th>CIT On Scene</th>
-                        <th>Outcome</th>
-                        <th>Feedback</th>
-                    <th>Time</th>
-                </tr>
-                </thead>
-                    <tbody>
-                    <?php
-                        $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID 
-	                        JOIN location on departments.locationID = location.locationID
-                            where departments.locationID  IN
-	                        (select locationID from location where country = '$country')";
-                        $Result = @mysqli_query($DBConnect, $Query);
-                        $records = array();
-                        if(mysqli_num_rows($Result)>0) {
-                            while(($Row = mysqli_fetch_assoc($Result))== true){
-                            $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
-                            'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
-                            'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
-                    ?>
-                            <tr>
-                                <td><?php echo $Row["IncidentNum"]; ?></td>
-                                <td><?php echo $Row["country"]; ?></td>
-                                <td><?php echo $Row["state"]; ?></td>
-                                <td><?php echo $Row["county"]; ?></td>
-                                <td><?php echo $Row["department"]; ?></td>
-                                <td><?php echo $Row["MCInvolvement"]; ?></td>
-                                <td><?php echo $Row["ConsThreatAsses"]; ?></td>
-                                <td><?php echo $Row["Weapons"]; ?></td>
-                                <td><?php echo $Row["OfficerInvolv"]; ?></td>
-                                <td><?php echo $Row["CITOnScene"]; ?></td>
-                                <td><?php echo $Row["Outcome"]; ?></td>
-                                <td><?php echo $Row["Feedback"]; ?></td>
-                                <td><?php echo $Row["Time"]; ?></td>
-                            </tr>
-                            <?php }
-                                }
-                            ?>
-                        </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Incident Number</th>
-                                    <th>Country</th>
-                                    <th>State</th>
-                                    <th>County</th>
-                                    <th>Department</th>
-                                    <th>MOBILE CRISIS Unit Involvement</th>
-                                    <th>Threat Assessment</th>
-                                    <th>Weapons</th>
-                                    <th>Officer Involvement</th>
-                                    <th>CIT On Scene</th>
-                                    <th>Outcome</th>
-                                    <th>Feedback</th>
-                                    <th>Time</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <table hidden id="hiddenTable" >
-                            <thead>
-                                <tr>
-                                    <th>Incident Number</th>
-                                    <th>Country</th>
-                                    <th>State</th>
-                                    <th>County</th>
-                                    <th>Department</th>
-                                    <th>MOBILE CRISIS Unit Involvement</th>
-                                    <th>Threat Assessment</th>
-                                    <th>Weapons</th>
-                                    <th>Officer Involvement</th>
-                                    <th>CIT On Scene</th>
-                                    <th>Outcome</th>
-                                    <th>Feedback</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                                <tbody>
+                                    <thead>
+                                        <tr>
+                                            <th>Incident Number</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>County</th>
+                                            <th>Department</th>
+                                            <th>MOBILE CRISIS Unit Involvement</th>
+                                            <th>Threat Assessment</th>
+                                            <th>Weapons</th>
+                                            <th>Officer Involvement</th>
+                                            <th>CIT On Scene</th>
+                                            <th>Outcome</th>
+                                            <th>Feedback</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
                                     <?php
+                                  
+                                   $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID 
+	                                            JOIN location on departments.locationID = location.locationID
+                                                    where departments.locationID  IN
+	                                                    (select locationID from location where country = '$country')";
+                                    $Result = @mysqli_query($DBConnect, $Query);
+                                    $records = array();
+                                    
+                                    if(mysqli_num_rows($Result)>0) {
+                                        while(($Row = mysqli_fetch_assoc($Result))== true){
+                                        $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
+                                        'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
+                                        'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
+                                        
+                                       
+                                        ?>
+                                        <tr>
+                                        <td><?php echo $Row["IncidentNum"]; ?></td>
+                                        <td><?php echo $Row["country"]; ?></td>
+                                        <td><?php echo $Row["state"]; ?></td>
+                                        <td><?php echo $Row["county"]; ?></td>
+                                        <td><?php echo $Row["department"]; ?></td>
+                                        <td><?php echo $Row["MCInvolvement"]; ?></td>
+                                        <td><?php echo $Row["ConsThreatAsses"]; ?></td>
+                                        <td><?php echo $Row["Weapons"]; ?></td>
+                                        <td><?php echo $Row["OfficerInvolv"]; ?></td>
+                                        <td><?php echo $Row["CITOnScene"]; ?></td>
+                                        <td><?php echo $Row["Outcome"]; ?></td>
+                                        <td><?php echo $Row["Feedback"]; ?></td>
+                                        <td><?php echo $Row["Time"]; ?></td>
+
+                                        </tr>
+                                        <?php }
+                                     }
+                                     ?>
+                                    
+                                       
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Incident Number</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>County</th>
+                                            <th>Department</th>
+                                            <th>MOBILE CRISIS Unit Involvement</th>
+                                            <th>Threat Assessment</th>
+                                            <th>Weapons</th>
+                                            <th>Officer Involvement</th>
+                                            <th>CIT On Scene</th>
+                                            <th>Outcome</th>
+                                            <th>Feedback</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+
+                                <table hidden id="hiddenTable" >
+                                    <thead>
+                                        <tr>
+                                            <th>Incident Number</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>County</th>
+                                            <th>Department</th>
+                                            <th>MOBILE CRISIS Unit Involvement</th>
+                                            <th>Threat Assessment</th>
+                                            <th>Weapons</th>
+                                            <th>Officer Involvement</th>
+                                            <th>CIT On Scene</th>
+                                            <th>Outcome</th>
+                                            <th>Feedback</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                    <?php
+
+                                                                    
+                                   
+                                   // $Result = @mysqli_query($DBConnect, $Query);
+                                    //if(mysqli_num_rows($Result)>0) {
+                                        //while(($Row = mysqli_fetch_assoc($Result))== true){
                                         foreach($records as $record) {?>
                                         <tr>
                                         <td><?php echo $record["incident"]; ?></td>
@@ -227,6 +255,7 @@ $country = stripslashes($_POST['selectCountry']);
 
                                         </tr>
                                         <?php }
+                                     //}
                                      ?>
                                                                           
                                     </tbody>
@@ -296,5 +325,10 @@ $country = stripslashes($_POST['selectCountry']);
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         
+
+
+
+        
+
     </body>
 </html>
