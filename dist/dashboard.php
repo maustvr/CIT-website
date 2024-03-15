@@ -156,14 +156,15 @@ $isActive = $_SESSION['isActive'];
                                     <tbody>
                                     <?php
 
-
+									$records = array();
                                    $Query = "select * from Incidents JOIN departments on Incidents.deptId = departments.deptID where departments.deptId IN (select deptID from departments where userID = '$userID')";
                                     $Result = @mysqli_query($DBConnect, $Query);
                                     if(mysqli_num_rows($Result)>0) {
                                         while(($Row = mysqli_fetch_assoc($Result))== true){
-                                        $records[] = array('incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
-                                        'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
-                                        'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
+											$records[] = array(
+												'incident' => $Row["IncidentNum"], 'country' => $Row["country"], 'state' => $Row["state"], 'county' => $Row["county"],
+												'department' => $Row["department"], 'mcinvolvement' => $Row["MCInvolvement"], 'threat' => $Row["ConsThreatAsses"], 'weapons' => $Row["Weapons"],
+												'officerinvolv' => $Row["OfficerInvolv"], 'citonscene' => $Row["CITOnScene"], 'outcome' => $Row["Outcome"], 'feedback' => $Row["Feedback"], 'time' => $Row["Time"] );
                                         ?>
                                         <tr>
                                         <td><?php echo $Row["IncidentNum"]; ?></td>
